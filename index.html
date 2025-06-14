@@ -3,39 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <title>Health Matters</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background-color: #38a169;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 p-6">
-  <div class="max-w-xl mx-auto bg-white p-6 rounded shadow">
-    <h1 class="text-2xl font-bold mb-4">Health Matters</h1>
-
+<body class="bg-gray-100 text-gray-900 min-h-screen p-6">
+  <div class="max-w-2xl mx-auto bg-white shadow-xl p-6 rounded-lg">
+    <h1 class="text-3xl font-extrabold text-blue-600 mb-4">Health Matters</h1>
     <form id="symptomForm" class="space-y-4">
       <input type="date" id="date" class="w-full p-2 border rounded" required>
-      <input type="text" id="symptom" placeholder="Symptom" class="w-full p-2 border" required>
-      <input type="number" id="severity" placeholder="Severity (1-10)" class="w-full p-2 border" required>
-      <textarea id="notes" placeholder="Notes" class="w-full p-2 border"></textarea>
-      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Log Symptom</button>
-      <button onclick="downloadPDF()" class="bg-green-500 text-white px-4 py-2 rounded" type="button">Download Report (PDF)</button>
+      <input type="text" id="symptom" placeholder="Symptom" class="w-full p-2 border rounded" required>
+      <input type="number" id="severity" placeholder="Severity (1-10)" class="w-full p-2 border rounded" required>
+      <textarea id="notes" placeholder="Notes" class="w-full p-2 border rounded"></textarea>
+      <div class="flex gap-2">
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Log Symptom</button>
+        <button type="button" onclick="downloadPDF()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">Download Report (PDF)</button>
+      </div>
     </form>
-
     <canvas id="symptomChart" class="mt-8" style="height:300px;"></canvas>
-
-    <h2 class="mt-6 text-lg font-semibold">Logged Symptoms</h2>
-    <table id="logTable" border="1" cellpadding="8" class="w-full mt-2 border border-gray-300">
-      <thead>
+    <h2 class="text-xl font-semibold mt-8 mb-2">Logged Symptoms</h2>
+    <table id="logTable" class="w-full border border-gray-300 text-left">
+      <thead class="bg-blue-50">
         <tr>
-          <th>Date</th>
-          <th>Symptom</th>
-          <th>Severity</th>
-          <th>Notes</th>
+          <th class="p-2 border">Date</th>
+          <th class="p-2 border">Symptom</th>
+          <th class="p-2 border">Severity</th>
+          <th class="p-2 border">Notes</th>
         </tr>
       </thead>
       <tbody></tbody>
     </table>
   </div>
-
-  <script src="script1.js"></script>
+  <div id="toast" class="toast">Symptom logged successfully!</div>
+  <script src="script.js"></script>
 </body>
 </html>
+

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Health Matters</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white shadow-lg rounded p-8 max-w-md w-full">
+    <h1 class="text-2xl font-bold text-center mb-6 text-blue-600">Health Matters Login</h1>
+
+    <form id="loginForm" class="space-y-4">
+      <input type="email" id="email" placeholder="Email" class="w-full p-2 border rounded" required>
+      <input type="password" id="password" placeholder="Password" class="w-full p-2 border rounded" required>
+
+      <div class="flex gap-2">
+        <button type="submit" class="w-1/2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Login</button>
+        <button type="button" onclick="registerUser()" class="w-1/2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Register</button>
+      </div>
+    </form>
+
+    <p id="msg" class="mt-4 text-center text-sm text-red-600"></p>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const msg = document.getElementById("msg");
+
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+
+      const user = users.find(u => u.email === email && u.password === password);
+      if (user) {
+        sessionStorage.setItem("loggedInUser", email);
+        window.location.href = "index.html";
+      } else {
+        msg.textContent = "Invalid credentials!";
+      }
+    });
+
+    function registerUser() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const msg = document.getElementById("msg");
+
+      if (!email || !password) {
+        msg.textContent = "Both fields are required.";
+        return;
+      }
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      if (users.some(u => u.email === email)) {
+        msg.textContent = "User already exists!";
+        return;
+      }
+
+      users.push({ email, password });
+      localStorage.setItem("users", JSON.stringify(users));
+      msg.textContent = "Registered successfully. Now login.";
+    }
+  </script>
+
+</body>
+</html>
